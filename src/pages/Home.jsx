@@ -1,4 +1,3 @@
-import React from 'react';
 import LiteraryList from '../components/LiteraryList';
 import AddLiteraryWork from '../components/AddLiteraryWork';
 
