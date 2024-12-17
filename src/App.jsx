@@ -1,27 +1,25 @@
-import styles from "./style";
+import React, { useState } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Header from './components/Header';
+import Home from './pages/Home';
+import About from './pages/About';
 
-import Navbar from "./components/Navbar"
+function App() {
+  const [works, setWorks] = useState([]);
 
-const App = () => (
-    <div className="bg-primary w-full overflow-hidden">
-      <div className={`${styles.paddingX} ${styles.flexCenter}`}>
-        <div className={`${styles.boxWidth}`}>
-          Navbar
-        </div>
-      </div>
+  const addWork = (title, content) => {
+    setWorks([...works, { title, content, id: works.length }]);
+  };
 
-      <div className={`bg-primary ${styles.flexStart}`}>
-        <div className={`${styles.boxWidth}`}>
-          Hero
-        </div>
-      </div> 
-
-      <div className={`bg-primary ${styles.paddingX} ${styles.flexStart}`}>
-        <div className={`${styles.boxWidth}`}>
-          
-        </div>
-      </div>
-    </div>
+  return (
+    <Router>
+      <Header />
+      <Routes>
+        <Route path="/" element={<Home works={works} addWork={addWork} />} />
+        <Route path="/about" element={<About />} />
+      </Routes>
+    </Router>
   );
+}
 
-export default App
+export default App;
