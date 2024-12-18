@@ -1,8 +1,5 @@
 import { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Header from './components/TheHeader';
-import Home from './pages/Home';
-import About from './pages/About';
 
 const App = () => (
   <div className="min-h-screen bg-gray-100">
