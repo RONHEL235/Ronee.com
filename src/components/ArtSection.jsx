@@ -1,30 +1,99 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-const ArtSection = ({ title, items }) => (
-  <section className="mb-8">
-    <h2 className="text-2xl font-bold mb-2">{title}</h2>
-    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
-  {items.map((item, index) => (
-    <div key={index} className="border p-2 bg-white shadow-md">
-      <img src={item.image} alt={item.name} className="w-32 h-32 object-cover mb-2" />
-      <h3 className="text-lg font-semibold mb-1">{item.name}</h3>
-      <p className="text-base text-gray-600 mb-2">{item.type}</p>
+const ArtSection = ({ title, items }) => {
+  const [selectedItem, setSelectedItem] = useState(null);
 
-      {/* Updated Download Button with Icon */}
-      <a
-        href={item.pdf}
-        download
-        className="block bg-blue-600 text-white text-center py-1 px-2 rounded mb-2 hover:bg-blue-700 flex items-center justify-center"
-      >
-        <span className="mr-2">Download PDF</span>
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-download" viewBox="0 0 16 16">
-          <path d="M8 12a.5.5 0 0 0 .5-.5V2.707l3.646 3.647a.5.5 0 1 0 .708-.707l-5-5a.5.5 0 0 0-.708 0l-5 5a.5.5 0 1 0 .708.707L7.5 2.707V11.5a.5.5 0 0 0 .5.5z"/>
-        </svg>
-      </a>
-    </div>
-  ))}
-</div>
-  </section>
-);
+  const renderContent = (item) => {
+    if (item.type === 'Book' || item.type === 'Poetry') {
+      return (
+        <div
+          className="cursor-pointer"
+          onClick={() => setSelectedItem(item)}
+        >
+          <img src={item.image} alt={item.name} className="w-32 h-32 object-cover mb-2" />
+          <h3 className="text-lg font-semibold mb-1">{item.name}</h3>
+          <p className="text-base text-gray-600 mb-2">{item.type}</p>
+        </div>
+      );
+    } else if (item.type === 'Music') {
+      return (
+        <div
+          className="cursor-pointer"
+          onClick={() => setSelectedItem(item)}
+        >
+          <img src={item.image} alt={item.name} className="w-32 h-32 object-cover mb-2" />
+          <h3 className="text-lg font-semibold mb-1">{item.name}</h3>
+          <p className="text-base text-gray-600 mb-2">{item.type}</p>
+          <audio controls>
+            <source src={item.audio} type="audio/mp3" />
+            Your browser does not support the audio element.
+          </audio>
+        </div>
+      );
+    } else if (item.type === 'Video') {
+      return (
+        <div
+          className="cursor-pointer"
+          onClick={() => setSelectedItem(item)}
+        >
+          <img src={item.image} alt={item.name} className="w-32 h-32 object-cover mb-2" />
+          <h3 className="text-lg font-semibold mb-1">{item.name}</h3>
+          <p className="text-base text-gray-600 mb-2">{item.type}</p>
+          <video controls width="100%">
+            <source src={item.video} type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+        </div>
+      );
+    }
+  };
+
+  return (
+    <section className="mb-8">
+      <h2 className="text-2xl font-bold mb-4">{title}</h2>
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
+        {items.map((item, index) => (
+          <div key={index} className="border p-2 bg-white shadow-md">
+            {renderContent(item)}
+          </div>
+        ))}
+      </div>
+
+      {/* Modal or Overlay for selected item */}
+      {selectedItem && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+          <div className="bg-white p-4 rounded-md max-w-lg mx-4">
+            <button
+              className="absolute top-2 right-2 text-red-600 font-bold text-lg"
+              onClick={() => setSelectedItem(null)}
+            >
+              X
+            </button>
+            <h3 className="text-2xl font-bold mb-2">{selectedItem.name}</h3>
+            {selectedItem.type === 'Book' || selectedItem.type === 'Poetry' ? (
+              <iframe
+                src={`path-to-your-pdf-viewer/${selectedItem.pdf}`} // Update with actual path
+                width="100%"
+                height="400px"
+              >
+                Your browser does not support the PDF viewer.
+              </iframe>
+            ) : selectedItem.type === 'Music' ? (
+              <audio controls>
+                <source src={selectedItem.audio} type="audio/mp3" />
+                Your browser does not support the audio element.
+              </audio>
+            ) : selectedItem.type === 'Video' ? (
+              <video controls width="100%">
+                <source src={selectedItem.video} type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+            ) : null}
+          </div>
+        </div>
+      )}
+    </section>
+  );
+};
 
 export default ArtSection;
