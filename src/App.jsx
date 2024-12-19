@@ -20,8 +20,8 @@ const App = () => {
 
   return (
     <div className="min-h-screen flex flex-col bg-gray-100">
-      <header className="bg-gray-700 text-white py-4">
-        <h1 className="text-center text-3xl font-bold">My Literary and Artistic Works</h1>
+      <header className="bg-gray-900 text-white py-8">
+        <h1 className="text-center text-3xl font-bold">Welcome to my Asylum</h1>
       </header>
       <main className="flex-1 container mx-auto px-4 py-8">
         <ArtSection title="Books & Poetry" items={books} />

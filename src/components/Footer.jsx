@@ -1,6 +1,6 @@
 const Footer = () => (
-    <footer className="bg-gray-700 text-white py-4 text-center">
-      <p>Dovskiesky is my father</p>
+    <footer className="bg-gray-900 text-white py-8 text-center">
+      <p>My anxiety keeps me up all night</p>
     </footer>
   );
   
